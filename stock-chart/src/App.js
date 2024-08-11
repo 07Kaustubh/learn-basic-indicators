@@ -10,11 +10,11 @@ function App() {
   useEffect(() => {
     // Fetch data when the selectedSymbol changes
     const fetchStockData = async () => {
-      const startTimeInMillis = new Date().getTime() - (24 * 60 * 60 * 1000 * 30); // 30 days ago
+      const startTimeInMillis = new Date().getTime() - (24 * 60 * 60 * 1000 * 1825); // 1825 days ago
       const endTimeInMillis = new Date().getTime();
       const intervalInMinutes = 1440; // Daily data
     
-      const url = `http://localhost:5000/api/stock/${selectedSymbol}?endTimeInMillis=${endTimeInMillis}&intervalInMinutes=${intervalInMinutes}&startTimeInMillis=${startTimeInMillis}`;
+      const url = `https://vigilant-space-spoon-579g544xqpvh4qr-5000.app.github.dev/api/stock/${selectedSymbol}?endTimeInMillis=${endTimeInMillis}&intervalInMinutes=${intervalInMinutes}&startTimeInMillis=${startTimeInMillis}`;
     
       try {
         const response = await fetch(url);
