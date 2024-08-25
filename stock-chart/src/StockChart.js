@@ -3,7 +3,7 @@ import { createChart, CrosshairMode, LineStyle } from 'lightweight-charts';
 
 const StockChart = ({ data }) => {
   const chartContainerRef = useRef();
-  const [ohlcv, setOhlcv] = useState({ open: null, high: null, low: null, close: null, volume: null });
+  const [ohlcv, setOhlcv] = useState({ open: null, high: null, low: null, close: null });
 
   useEffect(() => {
     const chart = createChart(chartContainerRef.current, {
@@ -47,7 +47,7 @@ const StockChart = ({ data }) => {
       },
     });
 
-    // Add Area Series (for some custom data representation)
+    // Add Area Series
     const areaSeries = chart.addAreaSeries({
       lastValueVisible: false,
       crosshairMarkerVisible: false,
@@ -131,30 +131,37 @@ const StockChart = ({ data }) => {
           high: candleData.high,
           low: candleData.low,
           close: candleData.close,
-          volume: candleData.volume,
         });
       }
     });
 
     window.addEventListener('resize', () => {
-      chart.resize(chartContainerRef.current.clientWidth, 400);
+      chart.resize(chartContainerRef.current.clientWidth, window.innerHeight - 50);
     });
 
     return () => chart.remove();
   }, [data]);
 
   return (
-    <div>
-      <div ref={chartContainerRef} style={{ position: 'relative', width: '100%', height: '400px' }} />
-      <div style={{ padding: '10px', backgroundColor: '#333', color: '#DDD', marginTop: '10px' }}>
+    <div style={{ position: 'fixed', top: 0, left: 0, width: '65%', height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div ref={chartContainerRef} style={{ width: '100%', height: 'calc(100vh - 50px)' }} />
+      <div style={{
+        padding: '10px',
+        backgroundColor: '#333',
+        color: '#DDD',
+        width: '100%',
+        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'space-around',
+        marginTop: '10px',
+      }}>
         {ohlcv.open !== null ? (
-          <div>
-            <p>Open: {ohlcv.open}</p>
-            <p>High: {ohlcv.high}</p>
-            <p>Low: {ohlcv.low}</p>
-            <p>Close: {ohlcv.close}</p>
-            <p>Volume: {ohlcv.volume}</p>
-          </div>
+          <>
+            <p><strong>Open:</strong> {ohlcv.open}</p>
+            <p><strong>High:</strong> {ohlcv.high}</p>
+            <p><strong>Low:</strong> {ohlcv.low}</p>
+            <p><strong>Close:</strong> {ohlcv.close}</p>
+          </>
         ) : (
           <p>Hover over the chart to see OHLCV data</p>
         )}

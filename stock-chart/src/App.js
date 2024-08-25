@@ -8,7 +8,6 @@ function App() {
   const [stockData, setStockData] = useState([]);
 
   useEffect(() => {
-    // Fetch data when the selectedSymbol changes
     const fetchStockData = async () => {
       const startTimeInMillis = new Date().getTime() - (24 * 60 * 60 * 1000 * 1825); // 1825 days ago
       const endTimeInMillis = new Date().getTime();
@@ -42,17 +41,22 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Stock Chart with Price Scales</h1>
-        <select value={selectedSymbol} onChange={handleCompanyChange}>
-          {companies.map((company) => (
-            <option key={company.Symbol} value={company.Symbol}>
-              {company['Company Name']}
-            </option>
-          ))}
-        </select>
-        <StockChart data={stockData} />
-      </header>
+      <StockChart data={stockData} />
+      <div style={{ marginLeft: '65%', padding: '20px', overflowY: 'auto', height: '100vh' }}>
+        <header>
+          <h1>Stock Chart with Price Scales</h1>
+          <select value={selectedSymbol} onChange={handleCompanyChange}>
+            {companies.map((company) => (
+              <option key={company.Symbol} value={company.Symbol}>
+                {company['Company Name']}
+              </option>
+            ))}
+          </select>
+        </header>
+        <main>
+          {/* Scrollable content will go here */}
+        </main>
+      </div>
     </div>
   );
 }
